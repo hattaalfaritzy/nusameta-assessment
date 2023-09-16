@@ -9,8 +9,8 @@
 1. **Setting up the Environment.**
 Before starting the development server, ensure you have set up the necessary environment variables. Create a .env.local file in the root of the project and add:
 ```
-NEXT_PUBLIC_API_URL=https://wpe-hiring.tokopedia.net/graphql
-NODE_ENV=development
+BASE_URL = https://pokeapi.co/api/v2
+API_TIMEOUT = 150000
 ```
 
 2. **Running the Development Server**
