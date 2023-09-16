@@ -3,25 +3,24 @@ import axios from 'axios';
 
 const timeout = Number(process.env.API_TIMEOUT || 15000);
 
-export const fetchApi = async ({ method, baseUrl = process.env.BASE_URL, url, params, data, headers, ...rest }: Props) => {
-    const finalHeaders = {
+const instance = axios.create({
+    timeout: timeout,
+    baseURL: process.env.BASE_URL,
+    headers: {
         rejectUnauthorized: false,
         Accept: 'application/json',
         'Access-Control-Allow-Origin': '*',
         'Content-Type': 'application/json',
         'cache-control': 'no-cache',
-        ...headers,
-    };
+    },
+});
 
-    const response = await axios({
-        timeout,
-        baseURL: baseUrl,
-        url,
-        params,
-        method,
-        headers: finalHeaders,
+export const fetchApi = async ({ method = 'GET', url, params, data }: Props) => {
+    const response = await instance({
+        method: method,
+        url: url,
+        params: params,
         data: data && JSON.stringify(data),
-        ...rest,
     });
 
     return response.data;
@@ -29,9 +28,7 @@ export const fetchApi = async ({ method, baseUrl = process.env.BASE_URL, url, pa
 
 interface Props {
     method?: string;
-    baseUrl?: string;
     url?: string;
     params?: Record<string, unknown>;
     data?: Record<string, unknown>;
-    headers?: Record<string, unknown>;
 }
