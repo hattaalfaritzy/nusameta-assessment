@@ -16,15 +16,15 @@ export async function GET(request: Request) {
         res.results = res.results.map((pokemon: any) => {
             return {
                 ...pokemon,
-                url: pokemon.url.replace(baseUrl, "")
+                url: pokemon.url.replace(baseUrl, '')
             };
         });
     }
     if (res.next) {
-        res.next = res.next.replace(baseUrl, "");
+        res.next = res.next.replace(baseUrl, '');
     }
     if (res.previous) {
-        res.previous = res.previous.replace(baseUrl, "");
+        res.previous = res.previous.replace(baseUrl, '');
     }    
     return NextResponse.json(res, { status: 200 });
 }
