@@ -58,7 +58,7 @@ export default function Pagination({
             <button
                 onClick={handlePrevClick}
                 disabled={currentPage === 1}
-                className={clsx('flex justify-center items-center h-6 w-6 rounded-full hover:bg-primary/10 on-hover')}
+                className={clsx('flex justify-center items-center h-8 w-8 rounded-full hover:bg-primary/10 on-hover')}
             >
                 <Icon name='chevron-left' className='fill-[#A0A8B6]' width={8} />
             </button>
@@ -69,18 +69,18 @@ export default function Pagination({
                         key={page}
                         onClick={() => handlePageClick(page)}
                         disabled={currentPage === page}
-                        className={clsx(page !== currentPage ? 'flex justify-center items-center h-6 w-6 rounded-full hover:bg-primary/10 on-hover' : 'flex justify-center items-center h-6 w-6 bg-primary hover:bg-primary rounded-full')}
+                        className={clsx(page !== currentPage ? 'flex justify-center items-center h-8 w-8 rounded-full hover:bg-primary/10 on-hover' : 'flex justify-center items-center h-8 w-8 bg-primary hover:bg-primary rounded-full')}
                     >
-                        <span className={clsx('text-sm ', page == currentPage ? 'text-white' : 'text-[#A0A8B6]')}>{page.toString()}</span>
+                        <span className={clsx('text-sm ', page == currentPage ? 'text-secondary' : 'text-[#A0A8B6]')}>{page.toString()}</span>
                     </button>
-                    {pageRange[idx + 1] - page > 1 && <button className='w-10' disabled>...</button>}
+                    {pageRange[idx + 1] - page > 1 && <button className='w-10 text-[#A0A8B6]' disabled>...</button>}
                 </div>
             ))}
 
             <button
                 onClick={handleNextClick}
                 disabled={currentPage === totalPages}
-                className={clsx('flex justify-center items-center h-6 w-6 rounded-full hover:bg-primary/10 on-hover')}
+                className={clsx('flex justify-center items-center h-8 w-8 rounded-full hover:bg-primary/10 on-hover')}
             >
                 <Icon name='chevron-right' className='fill-[#A0A8B6]' width={8} />
             </button>

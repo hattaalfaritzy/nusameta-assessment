@@ -1,14 +1,15 @@
 'use client';
+import clsx from 'clsx';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useQuery } from 'react-query';
 import { queryFetch } from '@/utils/query-fetch';
-import { Card, HeadingLink, ListForm, Pagination } from '@/components/commons';
+import { Card, HeadingLink, ImageWithFallback, ListForm, Pagination } from '@/components/commons';
 
 export default function Home() {
     const router = useRouter();
     const [currentPage, setCurrentPage] = useState<number>(1);
-    const limitPage = 10;
+    const [limitPage, setLimitPage] = useState<number>(10);
 
     const extractPokemonId = (url: string) => {
         const parts = url.split('/');
@@ -21,25 +22,26 @@ export default function Home() {
         return queryFetch('pokemons', `/pokemon?limit=${limitPage}&offset=${offset}`, {}, 'GET');
     };
 
-    const handlePageChange = async (page: number) => {
-        await fetchPokemons({ queryKey: ['pokemons', page] });
-    };
+    const handlePageChange = (limit: number, page: number) => {
+        setLimitPage(limit);
+        setCurrentPage(page);
+    };    
 
-    const { data, isError, isLoading } = useQuery(['pokemons', currentPage], fetchPokemons);
-
-    if (isError) return <p>Error fetching data</p>;
+    const { data, isError, isLoading } = useQuery<PokemonInterface.ApiResponse>(['pokemons', currentPage], fetchPokemons);   
 
     return (
         <div className='flex flex-col items-center w-full py--default space-y-8'>
             <HeadingLink title='List Pokemons' />
-            <div className='flex flex-col w-full space-y-4'>
+            <div className={clsx('flex flex-col w-full space-y-4', isLoading && 'justify-center items-center')}>
+                {isLoading && <ImageWithFallback alt='Logo Nusameta' src='/images/logo.svg' className='w-20 h-auto animate-spin'  />}
+                {isError && <p className='text-white text-base capitalize'>Error fetching data</p>}
                 {data?.results?.map((pokemon: any, index: number) => {
                     const pokemonId = extractPokemonId(pokemon.url);
                     return (
                         <Card
                             key={index}
                             onClick={() => {
-                                router.push(`/pokemon/${pokemonId}`);
+                                router.push(`/${pokemonId}`);
                             }}
                         >
                             <ListForm title={pokemon.name} value={pokemon.url} loading={isLoading} />
@@ -47,14 +49,15 @@ export default function Home() {
                     );
                 })}
             </div>
-            <span className='text-white text-base capitalize'>{currentPage}</span>
-            <Pagination
-                total={data?.count ?? 0}
-                itemsPerPage={limitPage}
-                currentPage={currentPage}
-                setCurrentPage={setCurrentPage}
-                onClickPage={handlePageChange}
-            />
+            {data?.results?.length && (
+                <Pagination
+                    total={data?.count ?? 0}
+                    itemsPerPage={limitPage}
+                    currentPage={currentPage}
+                    setCurrentPage={setCurrentPage}
+                    onClickPage={handlePageChange}
+                />
+            )}
         </div>
     );
 }

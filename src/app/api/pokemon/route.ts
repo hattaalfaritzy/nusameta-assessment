@@ -1,25 +1,30 @@
+import { fetchApi } from '@/utils/api';
 import { NextResponse } from 'next/server';
 
-export async function GET() {
-    const res = await fetch('https://pokeapi.co/api/v2/pokemon/?limit=20&offset=20');
-    const data = await res.json();
+export async function GET(request: Request) {
+    const { searchParams } = new URL(request.url)
+    const obj = Object.fromEntries(searchParams.entries())
+
+    const res = await fetchApi({
+        url: `/pokemon/?limit=${obj.limit}&offset=${obj.offset}`,
+        method: 'GET'
+    });
     
-    const baseUrl = "https://pokeapi.co/api/v2";
+    const baseUrl = process.env.BASE_URL;
     
-    if (data.results) {
-        data.results = data.results.map((pokemon: any) => {
+    if (res.results) {
+        res.results = res.results.map((pokemon: any) => {
             return {
                 ...pokemon,
                 url: pokemon.url.replace(baseUrl, "")
             };
         });
     }
-    if (data.next) {
-        data.next = data.next.replace(baseUrl, "");
+    if (res.next) {
+        res.next = res.next.replace(baseUrl, "");
     }
-    if (data.previous) {
-        data.previous = data.previous.replace(baseUrl, "");
-    }
-
-    return NextResponse.json(data, { status: 200 });
+    if (res.previous) {
+        res.previous = res.previous.replace(baseUrl, "");
+    }    
+    return NextResponse.json(res, { status: 200 });
 }

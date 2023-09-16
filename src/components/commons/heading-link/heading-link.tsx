@@ -9,13 +9,15 @@ export default function HeadingLink({ className, classNameTitle, classNameLabel,
     return (
         <Card className={clsx('flex flex-row justify-between items-center w-full', className)} canHover={false}>
             <div className={clsx('flex flex-row justify-start items-center', withBack && 'space-x-4')}>
-                {withBack && <div className='cursor-pointer' onClick={() => router.back()}>
-                    <Icon name='chevron-left' className='fill-black' />
-                </div>}
-                <div className={clsx('flex flex-col justify-start items-start w-full bg-transparent', label && 'space-y-1')}>
-                    <span className={clsx('text-base lg:text-xl text-white font-semibold', classNameTitle)}>{title}</span>
-                    {label && loading ? (
-                        <span className='rounded-full bg-light-700 h-4 w-2/3 animate-pulse' />
+                {withBack && (
+                    <div className='cursor-pointer' onClick={() => router.back()}>
+                        <Icon name='chevron-left' className='fill-white hover:fill-secondary on-hover' />
+                    </div>
+                )}
+                <div className={clsx('flex flex-col justify-start items-start w-full bg-transparent', label !== undefined && 'space-y-1')}>
+                    <span className={clsx('text-xl lg:text-3xl text-white font-semibold', classNameTitle)}>{title}</span>
+                    {label !== undefined && loading ? (
+                        <span className='rounded-full bg-secondary/70 h-4 w-2/3 animate-pulse' />
                     ) : (
                         <span className={clsx('text-white text-sm', classNameLabel)}>{label}</span>
                     )}
