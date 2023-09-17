@@ -56,6 +56,7 @@ export default function Pagination({
     return (
         <div className={clsx('flex flex-wrap justify-start lg:justify-center space-x-2 w-full lg:w-auto', className)}>
             <button
+                aria-label='Button Prev'
                 onClick={handlePrevClick}
                 disabled={currentPage === 1}
                 className={clsx('flex justify-center items-center h-8 w-8 rounded-full hover:bg-primary/10 on-hover')}
@@ -67,6 +68,7 @@ export default function Pagination({
                 <div key={idx} className={clsx(pageRange[idx + 1] - page > 1 && 'flex flex-row space-x-2')}>
                     <button
                         key={page}
+                        aria-label='Button Pagination'
                         onClick={() => handlePageClick(page)}
                         disabled={currentPage === page}
                         className={clsx(page !== currentPage ? 'flex justify-center items-center h-8 w-8 rounded-full hover:bg-primary/10 on-hover' : 'flex justify-center items-center h-8 w-8 bg-primary hover:bg-primary rounded-full')}
@@ -78,6 +80,7 @@ export default function Pagination({
             ))}
 
             <button
+                aria-label='Button Next'
                 onClick={handleNextClick}
                 disabled={currentPage === totalPages}
                 className={clsx('flex justify-center items-center h-8 w-8 rounded-full hover:bg-primary/10 on-hover')}

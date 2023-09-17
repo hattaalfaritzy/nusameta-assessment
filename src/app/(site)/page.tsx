@@ -33,7 +33,7 @@ export default function Home() {
         <div className='flex flex-col items-center w-full py--default space-y-8'>
             <HeadingLink title='List Pokémons' />
             <div className={clsx('flex flex-col w-full space-y-4', isLoading && 'justify-center items-center')}>
-                {isLoading && <ImageWithFallback alt='Logo Nusameta' src='/images/logo.svg' className='w-20 h-auto animate-spin'  />}
+                {isLoading && <ImageWithFallback alt='Logo Nusameta' width={80} height={80} src='/images/logo.svg' className='w-20 h-auto animate-spin'  />}
                 {isError && <p className='text-white text-base capitalize'>Error fetching data</p>}
                 {data?.results?.map((pokemon: any, index: number) => {
                     const pokemonId = extractPokemonId(pokemon.url);

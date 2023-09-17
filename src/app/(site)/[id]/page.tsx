@@ -28,7 +28,7 @@ export default function DetailPokemon() {
                     <ListForm title='Weight' value={data?.weight?.toString()} loading={isLoading} />
                 </Card>
             )}
-            {isLoading && <ImageWithFallback alt='Logo Nusameta' src='/images/logo.svg' className='w-20 h-auto animate-spin'  />}
+            {isLoading && <ImageWithFallback alt='Logo Nusameta' width={80} height={80} src='/images/logo.svg' className='w-20 h-auto animate-spin'  />}
             {isError && <p className='text-white text-base capitalize'>Error fetching data</p>}
         </div>
     );
