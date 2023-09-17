@@ -68,7 +68,7 @@ export default function Pagination({
                 <div key={idx} className={clsx(pageRange[idx + 1] - page > 1 && 'flex flex-row space-x-2')}>
                     <button
                         key={page}
-                        aria-label={`Button Pagination ${idx}`}
+                        aria-label={`Button Pagination ${idx + 1}`}
                         onClick={() => handlePageClick(page)}
                         disabled={currentPage === page}
                         className={clsx(page !== currentPage ? 'flex justify-center items-center h-8 w-8 rounded-full hover:bg-primary/10 on-hover' : 'flex justify-center items-center h-8 w-8 bg-primary hover:bg-primary rounded-full')}
