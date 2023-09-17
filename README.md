@@ -9,6 +9,7 @@
 1. **Setting up the Environment.**
 Before starting the development server, ensure you have set up the necessary environment variables. Create a .env.local file in the root of the project and add:
 ```
+NEXT_PUBLIC_BASE_URL= https://nusameta-assessment.vercel.app/api/
 BASE_URL = https://pokeapi.co/api/v2
 API_TIMEOUT = 150000
 ```
